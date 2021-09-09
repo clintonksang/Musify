@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musify/screens/category_selector.dart';
 import 'package:musify/screens/player.dart';
 import 'package:musify/services/playlistdataservice.dart';
 import 'package:musify/services/playlistservice.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
           create: (_) {
             return HardcodedPlaylistsService();
           },
-          child: Player()),
+          child: CategorySelector()),
     );
   }
 }

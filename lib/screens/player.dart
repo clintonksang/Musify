@@ -17,52 +17,34 @@ import 'package:provider/provider.dart';
 import 'commons/player_buttons.dart';
 import 'commons/playlist.dart';
 
-/// An audio player.
-///
-/// At the bottom of the page there is [PlayerButtons], while the rest of the
-/// page is filled with a [PLaylist] widget.
-class Player extends StatefulWidget {
-  @override
-  _PlayerState createState() => _PlayerState();
-}
 
-class _PlayerState extends State<Player> {
-  late AudioPlayer _audioPlayer;
 
-  @override
-  void initState() {
-    super.initState();
-    _audioPlayer = AudioPlayer();
+class Player extends StatelessWidget {
+  final AudioPlayer _audioPlayer;
+  final List<PlaylistItem> _playlist;
 
-    // Hardcoded audio sources
-    // TODO: Get sources with a network call, or at least move to a separated file.
-
+  Player(this._audioPlayer, this._playlist, {Key? key}) : super(key: key) {
+    if (!_audioPlayer.playing) _loadAudioSources(_playlist);
   }
 
   @override
-  void dispose() {
-    _audioPlayer.dispose();
-    super.dispose();
-  }
-
-@override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Consumer<PlayListServices>(
-          builder: (__, value, _) {
-            _loadAudioSources(value.allItems);
-            return Column(
-              children: [
-                Expanded(child: Playlist(_audioPlayer)),
-                PlayerButtons(_audioPlayer),
-              ],
-            );
-          },
+      appBar: AppBar(),
+      body: Center(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Expanded(child: Playlist(_audioPlayer)),
+              PlayerButtons(_audioPlayer),
+            ],
+          ),
         ),
       ),
     );
-}
+  }
+
+  // TODO we should keep track of what we are playing
   void _loadAudioSources(List<PlaylistItem> playlist) {
     _audioPlayer
         .setAudioSource(
