@@ -1,9 +1,6 @@
 import 'package:just_audio/just_audio.dart';
 import 'package:musify/models/playlist_item.dart';
 import 'package:musify/services/audio_player_service.dart';
-// import 'package:just_audio/.dart';
-
-// import 'package:just_audio_platform_interface/just_audio_platform_interface.dart';
 class JustAudioPlayer implements AudioPlayerService {
   final AudioPlayer _audioPlayer = AudioPlayer();
 
